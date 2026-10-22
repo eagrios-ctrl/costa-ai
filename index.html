@@ -1519,35 +1519,35 @@
 
     <div class="agents-wrap">
       <div class="agent-list">
-        <div class="agent-item selected">
+        <div class="agent-item selected" data-index="0">
           <div class="agent-emoji">🎯</div>
           <div>
             <h4>Acquire</h4>
             <p>Finds and researches prospects, drafts outreach, books meetings, and runs the entire account opening end-to-end — identity, e-sign, custodian, transfer.</p>
           </div>
         </div>
-        <div class="agent-item">
+        <div class="agent-item" data-index="1">
           <div class="agent-emoji">📊</div>
           <div>
             <h4>Manage My Book</h4>
             <p>Preps meetings, writes follow-ups, updates records, monitors portfolios, and handles service requests — before you even ask.</p>
           </div>
         </div>
-        <div class="agent-item">
+        <div class="agent-item" data-index="2">
           <div class="agent-emoji">📈</div>
           <div>
             <h4>Grow My Book</h4>
             <p>Spots whitespace and life-event triggers, then builds proposals and referral plans targeted to each relationship.</p>
           </div>
         </div>
-        <div class="agent-item">
+        <div class="agent-item" data-index="3">
           <div class="agent-emoji">🛡️</div>
           <div>
             <h4>Compliance</h4>
             <p>Checks suitability and Reg BI, archives all communications, monitors KYC/AML, and runs KYA controls continuously.</p>
           </div>
         </div>
-        <div class="agent-item">
+        <div class="agent-item" data-index="4">
           <div class="agent-emoji">🎓</div>
           <div>
             <h4>Training</h4>
@@ -1556,53 +1556,7 @@
         </div>
       </div>
 
-      <div class="agent-preview">
-        <div class="agent-preview-header">
-          <div class="preview-avatar">🎯</div>
-          <div>
-            <div class="preview-name">Acquire Agent</div>
-            <div class="preview-status">● Active — Account Opening: Thompson, J.</div>
-          </div>
-        </div>
-        <div class="preview-tasks">
-          <div class="preview-task">
-            <div class="task-check done">✓</div>
-            <span>KYC identity verification passed</span>
-          </div>
-          <div class="preview-task">
-            <div class="task-check done">✓</div>
-            <span>Account type and registration selected</span>
-          </div>
-          <div class="preview-task">
-            <div class="task-check done">✓</div>
-            <span>Application pre-filled and validated</span>
-          </div>
-          <div class="preview-task">
-            <div class="task-check doing">→</div>
-            <span>E-signature sent — awaiting client</span>
-          </div>
-          <div class="preview-task">
-            <div class="task-check wait"></div>
-            <span>Custodian account open</span>
-          </div>
-          <div class="preview-task">
-            <div class="task-check wait"></div>
-            <span>Asset transfer initiated</span>
-          </div>
-          <div class="preview-task">
-            <div class="task-check wait"></div>
-            <span>Suitability check complete</span>
-          </div>
-          <div class="preview-task">
-            <div class="task-check wait"></div>
-            <span>Advisor approval → done</span>
-          </div>
-        </div>
-        <div style="margin-top:1.5rem; padding:1rem; background:rgba(37,99,235,0.1); border-radius:10px; font-size:0.82rem; color:var(--muted)">
-          <strong style="color:var(--accent-light)">1 decision needed from you:</strong><br/>
-          Thompson requested a joint account. Approve the registration change?
-        </div>
-      </div>
+      <div class="agent-preview" id="agent-preview-panel"></div>
     </div>
   </div>
 </section>
@@ -2320,11 +2274,112 @@
 </footer>
 
 <script>
+  // Agent preview data
+  const agentData = [
+    {
+      emoji: '🎯',
+      name: 'Acquire Agent',
+      status: '● Active — Account Opening: Thompson, J.',
+      tasks: [
+        { state: 'done', label: 'KYC identity verification passed' },
+        { state: 'done', label: 'Account type and registration selected' },
+        { state: 'done', label: 'Application pre-filled and validated' },
+        { state: 'doing', label: 'E-signature sent — awaiting client' },
+        { state: 'wait', label: 'Custodian account open' },
+        { state: 'wait', label: 'Asset transfer initiated' },
+        { state: 'wait', label: 'Suitability check complete' },
+        { state: 'wait', label: 'Advisor approval → done' }
+      ],
+      decision: 'Thompson requested a joint account. Approve the registration change?'
+    },
+    {
+      emoji: '📊',
+      name: 'Manage My Book Agent',
+      status: '● Active — Prep: Chen, L. review tomorrow 9am',
+      tasks: [
+        { state: 'done', label: 'Portfolio performance pulled from Orion' },
+        { state: 'done', label: 'Last 3 service requests summarized' },
+        { state: 'done', label: 'Meeting agenda drafted' },
+        { state: 'doing', label: 'CRM notes updated post-call with Rivera, M.' },
+        { state: 'wait', label: 'Follow-up email queued for review' },
+        { state: 'wait', label: 'RMD reminder sent to Chen, L.' },
+        { state: 'wait', label: 'Annual review scheduled' }
+      ],
+      decision: 'Rivera asked about moving $200k to cash. Flag for suitability review?'
+    },
+    {
+      emoji: '📈',
+      name: 'Grow My Book Agent',
+      status: '● Active — 4 opportunities identified this week',
+      tasks: [
+        { state: 'done', label: 'Life event scan complete — 2 college starts, 1 retirement' },
+        { state: 'done', label: 'Whitespace analysis run on top 50 relationships' },
+        { state: 'done', label: 'Proposal drafted: Patel, R. — annuity rollover' },
+        { state: 'doing', label: 'Referral ask script personalized for Johnson, T.' },
+        { state: 'wait', label: 'Cross-sell model scores refreshed in Data Cloud' },
+        { state: 'wait', label: 'Outreach sequence queued for 3 prospects' }
+      ],
+      decision: 'Patel proposal ready. Send for review or push to client portal?'
+    },
+    {
+      emoji: '🛡️',
+      name: 'Compliance Agent',
+      status: '● Monitoring — 2 items need attention',
+      tasks: [
+        { state: 'done', label: 'Reg BI suitability check: all current recommendations pass' },
+        { state: 'done', label: 'Communications archive updated (past 30 days)' },
+        { state: 'done', label: 'KYC refresh completed for 12 clients' },
+        { state: 'doing', label: 'AML flag review: Martinez account — unusual wire pattern' },
+        { state: 'wait', label: 'Annual attestation sent to 3 advisors' },
+        { state: 'wait', label: 'Supervisory review of options activity' },
+        { state: 'wait', label: 'Branch exam prep package assembled' }
+      ],
+      decision: 'Martinez wire pattern flagged. Escalate to CCO or close as false positive?'
+    },
+    {
+      emoji: '🎓',
+      name: 'Training Agent',
+      status: '● Active — Coaching Williams, K. on options suitability',
+      tasks: [
+        { state: 'done', label: 'Onboarding path completed: 3 new advisors' },
+        { state: 'done', label: 'Product knowledge gap identified: structured notes' },
+        { state: 'done', label: 'Micro-lesson delivered in-flow: Reg BI objection handling' },
+        { state: 'doing', label: 'Role-play sim: complex estate planning conversation' },
+        { state: 'wait', label: 'CE credits logged to FINRA reporting' },
+        { state: 'wait', label: 'Branch manager coaching report generated' }
+      ],
+      decision: 'Williams completed sim but scored 72%. Assign remediation module?'
+    }
+  ];
+
+  function renderAgentPreview(index) {
+    const a = agentData[index];
+    const checkMap = { done: { cls: 'done', sym: '✓' }, doing: { cls: 'doing', sym: '→' }, wait: { cls: 'wait', sym: '' } };
+    const tasksHtml = a.tasks.map(t => {
+      const c = checkMap[t.state];
+      return `<div class="preview-task"><div class="task-check ${c.cls}">${c.sym}</div><span>${t.label}</span></div>`;
+    }).join('');
+    document.getElementById('agent-preview-panel').innerHTML = `
+      <div class="agent-preview-header">
+        <div class="preview-avatar">${a.emoji}</div>
+        <div>
+          <div class="preview-name">${a.name}</div>
+          <div class="preview-status">${a.status}</div>
+        </div>
+      </div>
+      <div class="preview-tasks">${tasksHtml}</div>
+      <div style="margin-top:1.5rem; padding:1rem; background:rgba(37,99,235,0.1); border-radius:10px; font-size:0.82rem; color:var(--muted)">
+        <strong style="color:var(--accent-light)">1 decision needed from you:</strong><br/>${a.decision}
+      </div>`;
+  }
+
   // Agent item interaction
+  renderAgentPreview(0);
   document.querySelectorAll('.agent-item').forEach(item => {
     item.addEventListener('click', () => {
       document.querySelectorAll('.agent-item').forEach(i => i.classList.remove('selected'));
       item.classList.add('selected');
+      renderAgentPreview(parseInt(item.dataset.index));
     });
   });
 
