@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Costa.ai — Your Chief of Staff</title>
+  <style>
+    :root {
+      --navy: #0a1628;
+      --deep: #0d1f3c;
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --white: #ffffff;
+      --off-white: #f8fafc;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --card-bg: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 4rem 4rem;
+    }
+
+    /* animated gradient orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.18;
+      animation: drift 12s ease-in-out infinite;
+    }
+    .orb-1 {
+      width: 700px; height: 700px;
+      background: var(--accent);
+      top: -200px; right: -100px;
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: var(--gold);
+      bottom: -100px; left: -100px;
+      animation-delay: 4s;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: #7c3aed;
+      top: 30%; left: 40%;
+      animation-delay: 8s;
+      opacity: 0.1;
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -30px); }
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--gold-light);
+      padding: 0.35rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--gold-light), var(--accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 520px;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #1d4ed8);
+      color: var(--white);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.5); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.9rem 1.8rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--muted); color: var(--white); }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .stat { }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--gold-light); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* ── AVATAR CARD ── */
+    .avatar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+    .avatar-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+    }
+
+    .avatar-figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    /* SVG Avatar */
+    .avatar-svg-wrap {
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), var(--gold), var(--accent));
+      animation: spin 6s linear infinite;
+      z-index: 0;
+    }
+    .avatar-ring-inner {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--navy);
+      z-index: 1;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .avatar-svg-wrap svg {
+      position: relative;
+      z-index: 2;
+      border-radius: 50%;
+      width: 160px;
+      height: 160px;
+    }
+
+    .avatar-online {
+      position: absolute;
+      bottom: 8px; right: 8px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #22c55e;
+      border: 3px solid var(--navy);
+      z-index: 3;
+    }
+
+    .avatar-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      text-align: center;
+    }
+    .avatar-role {
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .chat-bubble {
+      background: rgba(37,99,235,0.15);
+      border: 1px solid rgba(37,99,235,0.3);
+      border-radius: 16px 16px 16px 4px;
+      padding: 1rem 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+      position: relative;
+      width: 100%;
+    }
+    .chat-bubble::before {
+      content: '"';
+      font-size: 2rem;
+      color: var(--accent-light);
+      position: absolute;
+      top: -10px;
+      left: 12px;
+      line-height: 1;
+    }
+
+    .agent-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      width: 100%;
+      justify-content: center;
+    }
+    .chip {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .chip.active {
+      background: rgba(37,99,235,0.2);
+      border-color: rgba(37,99,235,0.4);
+      color: var(--accent-light);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 4rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .how-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .how-card:hover { border-color: rgba(37,99,235,0.4); transform: translateY(-4px); }
+    .how-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .how-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .how-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── AGENTS ── */
+    .agents-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+    .agent-list { display: flex; flex-direction: column; gap: 1rem; }
+    .agent-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .agent-item:hover, .agent-item.selected {
+      background: var(--card-bg);
+      border-color: rgba(37,99,235,0.3);
+    }
+    .agent-emoji {
+      font-size: 1.6rem;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .agent-item h4 { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+    .agent-item p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+    .agent-preview {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: sticky;
+      top: 7rem;
+    }
+    .agent-preview-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .preview-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .preview-name { font-weight: 700; color: var(--white); font-size: 1rem; }
+    .preview-status { font-size: 0.8rem; color: #22c55e; }
+
+    .preview-tasks { display: flex; flex-direction: column; gap: 0.8rem; }
+    .preview-task {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .task-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+    .task-check.done { background: rgba(34,197,94,0.2); border-color: #22c55e; color: #22c55e; }
+    .task-check.doing { background: rgba(37,99,235,0.2); border-color: var(--accent-light); color: var(--accent-light); animation: pulseBorder 2s infinite; }
+    .task-check.wait { border-color: var(--border); }
+    @keyframes pulseBorder { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    /* ── KYA ── */
+    .kya-section { background: rgba(255,255,255,0.02); }
+    .kya-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .kya-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .kya-card .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .kya-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .kya-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── OUTCOMES ── */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .outcome-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .outcome-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .outcome-card.blue::after { background: linear-gradient(90deg, var(--accent), transparent); }
+    .outcome-card.gold::after { background: linear-gradient(90deg, var(--gold), transparent); }
+    .outcome-card.green::after { background: linear-gradient(90deg, #22c55e, transparent); }
+    .outcome-card.purple::after { background: linear-gradient(90deg, #7c3aed, transparent); }
+
+    .outcome-before-after {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .oba {
+      text-align: center;
+      flex: 1;
+    }
+    .oba-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .oba-value { font-size: 1.6rem; font-weight: 800; color: var(--white); line-height: 1.1; margin: 0.2rem 0; }
+    .oba-value.before { color: var(--muted); font-size: 1.2rem; }
+    .oba-arrow { font-size: 1.2rem; color: var(--gold-light); }
+    .outcome-label { font-size: 0.9rem; color: var(--muted); }
+
+    /* ── INDUSTRIES ── */
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .industry-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .industry-card:hover { border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.05); transform: translateY(-4px); }
+    .industry-card .icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .industry-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+    .industry-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .industry-card .badge {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .badge-now { background: rgba(37,99,235,0.2); color: var(--accent-light); }
+    .badge-soon { background: rgba(245,158,11,0.15); color: var(--gold-light); }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: radial-gradient(ellipse at 50% 50%, rgba(37,99,235,0.15) 0%, transparent 70%);
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-form {
+      display: flex;
+      gap: 0.8rem;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .cta-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem 1.2rem;
+      color: var(--white);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cta-form input::placeholder { color: var(--muted); }
+    .cta-form input:focus { border-color: var(--accent-light); }
+    .cta-form button {
+      background: linear-gradient(135deg, var(--gold), #d97706);
+      color: #0a1628;
+      border: none;
+      padding: 0.8rem 1.6rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(245,158,11,0.3);
+    }
+    .cta-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.4); }
+    .cta-note { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+    }
+    .footer-logo { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .footer-logo span { color: var(--gold); }
+    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section, .hero { padding: 4rem 1.5rem; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .agents-wrap { grid-template-columns: 1fr; }
+      .kya-grid { grid-template-columns: 1fr 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .industries-grid { grid-template-columns: 1fr 1fr; }
+      .cta-form { flex-direction: column; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .persona-tabs { flex-direction: column; gap: 0.5rem; }
+      .persona-tab { width: 100%; }
+      .persona-layout { grid-template-columns: 1fr; }
+      .persona-device { min-height: 400px; }
+      .cockpit-panels { grid-template-columns: 1fr; }
+      .cockpit-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+
+  <style>
+    /* ── PERSONAS SECTION ── */
+    #personas {
+      background: linear-gradient(180deg, var(--navy) 0%, rgba(13,31,60,0.6) 100%);
+      padding: 8rem 2rem;
+    }
+
+    /* Tab switcher */
+    .persona-tabs {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0 2.5rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 1.25rem;
+      padding: 0.5rem;
+      border: 1px solid var(--border);
+    }
+    .persona-tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-radius: 0.875rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      color: var(--muted);
+      text-align: left;
+    }
+    .persona-tab:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .persona-tab.active {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+    }
+    .ptab-icon { font-size: 1.4rem; }
+    .ptab-label { font-size: 0.95rem; font-weight: 600; display: block; }
+    .ptab-sub { font-size: 0.75rem; opacity: 0.75; display: block; margin-top: 0.1rem; }
+
+    /* Panel visibility */
+    .persona-panel { display: none; }
+    .persona-panel.active { display: block; }
+
+    /* Shared layout: copy left, device right */
+    .persona-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 1.5rem;
+    }
+    .persona-copy h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .persona-copy p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .persona-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .persona-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .persona-bullets li::before {
+      content: '→';
+      color: var(--accent-light);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── ADVISOR: PHONE ── */
+    .advisor-phone { display: flex; justify-content: center; }
+    .phone-frame {
+      width: 280px;
+      background: #1a1a2e;
+      border-radius: 2.5rem;
+      padding: 0.75rem;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.12), inset 0 1px 0 rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .phone-notch {
+      width: 80px; height: 22px;
+      background: #0f0f1a;
+      border-radius: 0 0 1rem 1rem;
+      margin: 0 auto 0.5rem;
+    }
+    .phone-screen {
+      background: #0f0f1a;
+      border-radius: 1.75rem;
+      overflow: hidden;
+      height: 560px;
+      display: flex;
+      flex-direction: column;
+    }
+    .phone-status-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 1rem;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.7);
+      background: #0f0f1a;
+    }
+    .phone-app-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1rem;
+      background: #131328;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .phone-header-name { font-size: 0.85rem; font-weight: 600; color: #fff; }
+    .phone-header-status { font-size: 0.65rem; color: #4ade80; display: flex; align-items: center; gap: 3px; }
+    .online-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; display: inline-block; }
+    .phone-header-menu { margin-left: auto; color: rgba(255,255,255,0.5); font-size: 1.1rem; }
+    .phone-chat {
+      flex: 1;
+      overflow: hidden;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .chat-date-divider {
+      text-align: center;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.3);
+      margin: 0.25rem 0;
+    }
+    .chat-bubble {
+      padding: 0.6rem 0.8rem;
+      border-radius: 1rem;
+      font-size: 0.7rem;
+      line-height: 1.45;
+      max-width: 92%;
+    }
+    .chat-bubble.costa {
+      background: rgba(37,99,235,0.2);
+      border: 1px solid rgba(37,99,235,0.3);
+      color: var(--text);
+      align-self: flex-start;
+      border-top-left-radius: 0.25rem;
+    }
+    .chat-bubble.user {
+      background: #2563eb;
+      color: white;
+      align-self: flex-end;
+      border-top-right-radius: 0.25rem;
+    }
+    .chat-brief-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .brief-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .brief-card.priority { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+    .brief-card-icon { font-size: 0.7rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .brief-card-name { font-size: 0.65rem; font-weight: 600; color: #fff; }
+    .brief-card-detail { font-size: 0.6rem; color: rgba(255,255,255,0.55); margin-top: 0.1rem; }
+    .chat-actions { display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .chat-action-btn {
+      font-size: 0.6rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: 0.4rem;
+      border: 1px solid rgba(37,99,235,0.5);
+      background: rgba(37,99,235,0.2);
+      color: #93c5fd;
+      cursor: pointer;
+    }
+    .chat-action-btn.secondary { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: var(--muted); }
+    .chat-bubble.typing {
+      background: rgba(37,99,235,0.15);
+      border: 1px solid rgba(37,99,235,0.2);
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      padding: 0.5rem 0.8rem;
+      width: fit-content;
+    }
+    .typing-dot {
+      width: 5px; height: 5px;
+      background: #60a5fa;
+      border-radius: 50%;
+      animation: typingPulse 1.2s ease-in-out infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingPulse {
+      0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+      30% { opacity: 1; transform: scale(1.1); }
+    }
+    .phone-input-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.75rem;
+      background: #131328;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .phone-input-field {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .phone-send-btn {
+      width: 26px; height: 26px;
+      background: #2563eb;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── COMPLIANCE: COCKPIT ── */
+    .compliance-cockpit { width: 100%; }
+    .cockpit-frame {
+      background: #0d1117;
+      border-radius: 0.875rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .cockpit-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      background: #161b22;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .cockpit-logo { font-size: 0.9rem; font-weight: 700; color: #fff; }
+    .cockpit-logo span:first-child { color: #60a5fa; }
+    .cockpit-badge {
+      font-size: 0.6rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 1rem;
+      background: rgba(37,99,235,0.2);
+      border: 1px solid rgba(37,99,235,0.35);
+      color: #93c5fd;
+      margin-left: 0.5rem;
+    }
+    .cockpit-topbar-right { display: flex; align-items: center; gap: 1rem; }
+    .cockpit-alert-count { font-size: 0.7rem; color: #fbbf24; }
+    .cockpit-user {
+      width: 28px; height: 28px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: white;
+    }
+    .cockpit-body { padding: 1rem; }
+    .cockpit-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .cstat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0.625rem;
+      padding: 0.75rem;
+    }
+    .cstat.green { border-color: rgba(74,222,128,0.2); }
+    .cstat.yellow { border-color: rgba(251,191,36,0.3); }
+    .cstat-val { font-size: 1.4rem; font-weight: 700; color: white; }
+    .cstat.yellow .cstat-val { color: #fbbf24; }
+    .cstat-label { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }
+    .cstat-sub { font-size: 0.58rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
+    .cockpit-panels {
+      display: grid;
+      grid-template-columns: 1fr 0.6fr;
+      gap: 0.75rem;
+    }
+    .cockpit-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0.625rem;
+      overflow: hidden;
+    }
+    .cockpit-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.875rem;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .live-badge { font-size: 0.6rem; color: #4ade80; animation: livePulse 1.5s ease-in-out infinite; }
+    @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .activity-feed { padding: 0.5rem; }
+    .activity-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.5rem;
+      border-radius: 0.375rem;
+      margin-bottom: 0.25rem;
+      transition: background 0.15s;
+    }
+    .activity-row:hover { background: rgba(255,255,255,0.03); }
+    .activity-row.flagged { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.1); }
+    .activity-agent {
+      width: 28px; height: 28px;
+      border-radius: 0.375rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .activity-agent.acquire { background: rgba(37,99,235,0.25); color: #93c5fd; }
+    .activity-agent.comply { background: rgba(239,68,68,0.2); color: #fca5a5; }
+    .activity-agent.grow { background: rgba(74,222,128,0.15); color: #86efac; }
+    .activity-agent.manage { background: rgba(168,85,247,0.2); color: #d8b4fe; }
+    .activity-detail { flex: 1; min-width: 0; }
+    .activity-action { font-size: 0.68rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .activity-meta { font-size: 0.58rem; color: var(--muted); margin-top: 0.1rem; }
+    .activity-status { font-size: 0.6rem; white-space: nowrap; flex-shrink: 0; }
+    .activity-status.ok { color: #4ade80; }
+    .activity-status.warn { color: #fbbf24; }
+    .kya-scores { padding: 0.6rem 0.875rem; }
+    .kya-score-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .kya-agent-name { font-size: 0.65rem; color: var(--muted); width: 70px; flex-shrink: 0; }
+    .kya-bar-wrap { flex: 1; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+    .kya-bar { height: 100%; background: #4ade80; border-radius: 3px; transition: width 1s ease; }
+    .kya-score-val { font-size: 0.65rem; font-weight: 700; width: 24px; text-align: right; }
+    .kya-score-val.green { color: #4ade80; }
+    .kya-score-val.yellow { color: #fbbf24; }
+    .risk-table { padding: 0.6rem 0.875rem; }
+    .risk-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .risk-name { font-size: 0.65rem; color: var(--muted); width: 70px; flex-shrink: 0; }
+    .risk-bar-wrap { flex: 1; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+    .risk-bar { height: 100%; border-radius: 3px; }
+    .risk-bar.low { background: #4ade80; }
+    .risk-bar.med { background: #fbbf24; }
+    .risk-label { font-size: 0.6rem; width: 40px; }
+    .risk-label.low { color: #4ade80; }
+    .risk-label.med { color: #fbbf24; }
+
+    /* ── ADMIN: IDE ── */
+    .admin-ide { width: 100%; }
+    .ide-frame {
+      background: #0d1117;
+      border-radius: 0.875rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .ide-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      background: #161b22;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      height: 42px;
+    }
+    .ide-tabs { display: flex; gap: 0; height: 100%; }
+    .ide-tab {
+      padding: 0 1rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .ide-tab.active { color: white; border-bottom-color: var(--accent); }
+    .ide-tab:hover:not(.active) { color: var(--text); }
+    .ide-topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+    .ide-deploy-btn {
+      padding: 0.4rem 0.875rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: #16a34a;
+      border: none;
+      border-radius: 0.375rem;
+      color: white;
+      cursor: pointer;
+    }
+    .ide-body {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      height: 480px;
+    }
+    .ide-sidebar {
+      background: #0d1117;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 0.75rem 0;
+      overflow-y: auto;
+    }
+    .ide-sidebar-header {
+      padding: 0.35rem 0.875rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .ide-agent-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.875rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .ide-agent-item:hover, .ide-agent-item.active { background: rgba(37,99,235,0.15); color: white; }
+    .ide-agent-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .ide-agent-dot.green { background: #4ade80; }
+    .ide-agent-dot.yellow { background: #fbbf24; }
+    .ide-connector-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.875rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .ide-conn-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .ide-conn-dot.active { background: #4ade80; }
+    .ide-conn-dot.inactive { background: rgba(255,255,255,0.2); }
+    .ide-conn-status { margin-left: auto; color: #4ade80; font-size: 0.6rem; }
+    .ide-conn-status.inactive { color: rgba(255,255,255,0.2); }
+    .ide-canvas {
+      background: #0f1319;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+    .ide-canvas-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .ide-breadcrumb { font-size: 0.7rem; color: var(--muted); }
+    .ide-breadcrumb strong { color: var(--text); }
+    .ide-save-badge { font-size: 0.62rem; color: #fbbf24; }
+    .ide-section-block {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0.625rem;
+      padding: 0.875rem;
+      margin-bottom: 0.875rem;
+    }
+    .ide-block-title { font-size: 0.8rem; font-weight: 600; color: white; margin-bottom: 0.25rem; }
+    .ide-block-sub { font-size: 0.65rem; color: var(--muted); margin-bottom: 0.875rem; }
+    .model-routing-rows { display: flex; flex-direction: column; gap: 0.5rem; }
+    .model-route-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .model-route-row.sensitive { background: rgba(239,68,68,0.04); border-color: rgba(239,68,68,0.12); }
+    .model-route-row.general { background: rgba(37,99,235,0.04); border-color: rgba(37,99,235,0.12); }
+    .model-route-left { display: flex; align-items: center; gap: 0.6rem; }
+    .model-route-tag {
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem;
+      flex-shrink: 0;
+    }
+    .model-route-tag.local { background: rgba(239,68,68,0.2); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+    .model-route-tag.cloud { background: rgba(37,99,235,0.2); color: #93c5fd; border: 1px solid rgba(37,99,235,0.3); }
+    .model-route-name { font-size: 0.72rem; font-weight: 600; color: var(--text); }
+    .model-route-desc { font-size: 0.6rem; color: var(--muted); margin-top: 0.1rem; }
+    .model-route-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .model-badge {
+      font-size: 0.6rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.375rem;
+      font-family: monospace;
+    }
+    .model-badge.local { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.25); }
+    .model-badge.cloud { background: rgba(37,99,235,0.15); color: #93c5fd; border: 1px solid rgba(37,99,235,0.25); }
+    .model-lock { font-size: 0.7rem; }
+    .guardrail-rows { display: flex; flex-direction: column; gap: 0.4rem; }
+    .guardrail-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.625rem;
+      background: rgba(255,255,255,0.025);
+      border-radius: 0.375rem;
+    }
+    .guardrail-label { font-size: 0.68rem; color: var(--text); }
+    .guardrail-tag {
+      font-size: 0.6rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 1rem;
+    }
+    .guardrail-tag.human { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+    .guardrail-tag.review { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+    .guardrail-tag.auto { background: rgba(74,222,128,0.12); color: #86efac; border: 1px solid rgba(74,222,128,0.2); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">costa<span>.</span>ai</div>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#agents">Agents</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#outcomes">Outcomes</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Get Early Access</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">Introducing Costa.ai</div>
+      <h1>Meet your<br /><em>Chief of Staff</em><br />for regulated work</h1>
+      <p class="hero-sub">
+        Costa is the AI-native operating layer for advisors, bankers, and professionals in regulated industries. She handles everything — compliance, paperwork, follow-ups, and prep — so you can focus entirely on the relationships that matter.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Request Early Access</button>
+        <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">70<span>%+</span></div>
+          <div class="stat-label">More time with clients</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1<span> day</span></div>
+          <div class="stat-label">Account opening (was 2–4 wks)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">&lt;2<span>%</span></div>
+          <div class="stat-label">NIGO rate (was 25%+)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AVATAR CARD -->
+    <div class="avatar-card">
+      <div class="avatar-figure">
+        <div class="avatar-svg-wrap">
+          <div class="avatar-ring"></div>
+          <div class="avatar-ring-inner"></div>
+          <!-- Friendly woman SVG avatar -->
+          <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id="circle-clip">
+                <circle cx="80" cy="80" r="80"/>
+              </clipPath>
+              <radialGradient id="bg-grad" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#1e3a6e"/>
+                <stop offset="100%" stop-color="#0d1f3c"/>
+              </radialGradient>
+            </defs>
+            <g clip-path="url(#circle-clip)">
+              <!-- Background -->
+              <rect width="160" height="160" fill="url(#bg-grad)"/>
+              <!-- Subtle glow behind figure -->
+              <ellipse cx="80" cy="160" rx="70" ry="60" fill="#2563eb" opacity="0.18"/>
+              <!-- Body / clothing — navy blazer -->
+              <ellipse cx="80" cy="148" rx="50" ry="38" fill="#1e3a6e"/>
+              <ellipse cx="80" cy="142" rx="44" ry="32" fill="#1d40af"/>
+              <!-- Neck -->
+              <rect x="71" y="110" width="18" height="22" rx="9" fill="#c6956a"/>
+              <!-- Head -->
+              <ellipse cx="80" cy="92" rx="30" ry="32" fill="#c6956a"/>
+              <!-- Hair – warm brown waves -->
+              <ellipse cx="80" cy="70" rx="30" ry="18" fill="#6b3a1f"/>
+              <path d="M50 82 Q46 70 50 60 Q55 48 65 44 Q75 40 80 40 Q90 38 98 44 Q107 50 108 62 Q110 74 108 84"
+                    fill="#6b3a1f"/>
+              <!-- Side hair sweep -->
+              <path d="M50 82 Q44 90 46 104 Q48 114 54 116" fill="#5a3018" opacity="0.8"/>
+              <path d="M110 82 Q116 90 114 104 Q112 114 107 118" fill="#5a3018" opacity="0.8"/>
+              <!-- Hair highlight -->
+              <path d="M64 50 Q72 44 82 43 Q90 43 96 47" fill="none" stroke="#a0612e" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+              <!-- Ears -->
+              <ellipse cx="50" cy="94" rx="5" ry="7" fill="#c09060"/>
+              <ellipse cx="110" cy="94" rx="5" ry="7" fill="#c09060"/>
+              <!-- Eyes - warm brown -->
+              <ellipse cx="68" cy="94" rx="6" ry="5.5" fill="#fff"/>
+              <ellipse cx="92" cy="94" rx="6" ry="5.5" fill="#fff"/>
+              <ellipse cx="69" cy="94" rx="4" ry="4" fill="#5a3018"/>
+              <ellipse cx="93" cy="94" rx="4" ry="4" fill="#5a3018"/>
+              <ellipse cx="70" cy="93" rx="1.5" ry="1.5" fill="#000"/>
+              <ellipse cx="94" cy="93" rx="1.5" ry="1.5" fill="#000"/>
+              <!-- Eye shine -->
+              <ellipse cx="71" cy="92" rx="1" ry="1" fill="#fff" opacity="0.9"/>
+              <ellipse cx="95" cy="92" rx="1" ry="1" fill="#fff" opacity="0.9"/>
+              <!-- Eyebrows – natural arches -->
+              <path d="M63 88 Q68 85 74 87" stroke="#4a2a0e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M87 87 Q93 85 98 88" stroke="#4a2a0e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Nose -->
+              <path d="M80 98 Q77 103 78 105 Q80 107 82 105 Q83 103 80 98" fill="#b07040" opacity="0.6"/>
+              <!-- Smile – warm and friendly -->
+              <path d="M70 112 Q75 118 80 119 Q85 118 90 112"
+                    stroke="#b07040" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Teeth hint -->
+              <path d="M72 113 Q80 118 88 113" fill="#fff" opacity="0.4"/>
+              <!-- Ear rings – small gold studs -->
+              <circle cx="50" cy="96" r="2.5" fill="#f59e0b"/>
+              <circle cx="110" cy="96" r="2.5" fill="#f59e0b"/>
+              <!-- Collar / lapel -->
+              <path d="M62 135 L72 118 L80 126 L88 118 L98 135 Z" fill="#fff" opacity="0.07"/>
+            </g>
+          </svg>
+          <div class="avatar-online"></div>
+        </div>
+
+        <div style="text-align:center">
+          <div class="avatar-name">Costa</div>
+          <div class="avatar-role">Your Chief of Staff</div>
+        </div>
+
+        <div class="chat-bubble">
+          Good morning. I've prepped your 9am review, flagged a suitability issue on the Rodriguez account, and drafted the Thompson proposal. You have 3 decisions waiting.
+        </div>
+
+        <div class="agent-chips">
+          <span class="chip active">Acquire</span>
+          <span class="chip active">Manage Book</span>
+          <span class="chip active">Compliance</span>
+          <span class="chip">Grow Book</span>
+          <span class="chip">Training</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-tag">How Costa Works</div>
+    <h2 class="section-title">One Chief of Staff.<br />An infinite team behind her.</h2>
+    <p class="section-sub">Costa sits between you and your entire operation. She delegates to a team of specialized agents, keeps everything compliant, and surfaces only the decisions that need you.</p>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-icon" style="background:rgba(37,99,235,0.15)">🧠</div>
+        <h3>One unified client record</h3>
+        <p>Every agent shares a single view of the client, the household, the history, and the compliance file. No silos. No duplication.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:rgba(245,158,11,0.15)">🔐</div>
+        <h3>Know Your Agent (KYA)</h3>
+        <p>Every agent has a registered identity, scoped permissions, and a human owner. Compliance is built in — not bolted on.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:rgba(124,58,237,0.15)">⚡</div>
+        <h3>Proactive, not reactive</h3>
+        <p>Costa doesn't wait for questions. She monitors, alerts, prepares, and executes — surfacing decisions before they become problems.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:rgba(34,197,94,0.15)">🛠️</div>
+        <h3>No-code admin IDE</h3>
+        <p>Admins wire integrations and configure agents visually. No engineers required to connect your existing systems.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:rgba(239,68,68,0.15)">📋</div>
+        <h3>Compliance at every step</h3>
+        <p>Every action is checked, archived, and auditable. Reg BI, KYC/AML, suitability — governed continuously, not sampled quarterly.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:rgba(14,165,233,0.15)">🤝</div>
+        <h3>Human judgment at the center</h3>
+        <p>Agents handle the work. You make the calls. Costa brings only what genuinely needs your expertise — nothing else.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS -->
+<section id="agents" style="background:rgba(255,255,255,0.02)">
+  <div class="section-inner">
+    <div class="section-tag">The Agent Team</div>
+    <h2 class="section-title">Five agents. One mission.<br />Your time back.</h2>
+    <p class="section-sub">Each agent is purpose-built, compliance-aware, and governed by KYA. Together they cover every function of the advisory practice.</p>
+
+    <div class="agents-wrap">
+      <div class="agent-list">
+        <div class="agent-item selected">
+          <div class="agent-emoji">🎯</div>
+          <div>
+            <h4>Acquire</h4>
+            <p>Finds and researches prospects, drafts outreach, books meetings, and runs the entire account opening end-to-end — identity, e-sign, custodian, transfer.</p>
+          </div>
+        </div>
+        <div class="agent-item">
+          <div class="agent-emoji">📊</div>
+          <div>
+            <h4>Manage My Book</h4>
+            <p>Preps meetings, writes follow-ups, updates records, monitors portfolios, and handles service requests — before you even ask.</p>
+          </div>
+        </div>
+        <div class="agent-item">
+          <div class="agent-emoji">📈</div>
+          <div>
+            <h4>Grow My Book</h4>
+            <p>Spots whitespace and life-event triggers, then builds proposals and referral plans targeted to each relationship.</p>
+          </div>
+        </div>
+        <div class="agent-item">
+          <div class="agent-emoji">🛡️</div>
+          <div>
+            <h4>Compliance</h4>
+            <p>Checks suitability and Reg BI, archives all communications, monitors KYC/AML, and runs KYA controls continuously.</p>
+          </div>
+        </div>
+        <div class="agent-item">
+          <div class="agent-emoji">🎓</div>
+          <div>
+            <h4>Training</h4>
+            <p>Coaches in the flow of work with micro-learning, role-play simulations, and just-in-time guidance exactly when you need it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-preview">
+        <div class="agent-preview-header">
+          <div class="preview-avatar">🎯</div>
+          <div>
+            <div class="preview-name">Acquire Agent</div>
+            <div class="preview-status">● Active — Account Opening: Thompson, J.</div>
+          </div>
+        </div>
+        <div class="preview-tasks">
+          <div class="preview-task">
+            <div class="task-check done">✓</div>
+            <span>KYC identity verification passed</span>
+          </div>
+          <div class="preview-task">
+            <div class="task-check done">✓</div>
+            <span>Account type and registration selected</span>
+          </div>
+          <div class="preview-task">
+            <div class="task-check done">✓</div>
+            <span>Application pre-filled and validated</span>
+          </div>
+          <div class="preview-task">
+            <div class="task-check doing">→</div>
+            <span>E-signature sent — awaiting client</span>
+          </div>
+          <div class="preview-task">
+            <div class="task-check wait"></div>
+            <span>Custodian account open</span>
+          </div>
+          <div class="preview-task">
+            <div class="task-check wait"></div>
+            <span>Asset transfer initiated</span>
+          </div>
+          <div class="preview-task">
+            <div class="task-check wait"></div>
+            <span>Suitability check complete</span>
+          </div>
+          <div class="preview-task">
+            <div class="task-check wait"></div>
+            <span>Advisor approval → done</span>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem; padding:1rem; background:rgba(37,99,235,0.1); border-radius:10px; font-size:0.82rem; color:var(--muted)">
+          <strong style="color:var(--accent-light)">1 decision needed from you:</strong><br/>
+          Thompson requested a joint account. Approve the registration change?
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS -->
+<section id="personas">
+  <div class="section-inner">
+    <div class="section-tag">Built for Every Role</div>
+    <h2 class="section-title">One platform.<br />Three different superpowers.</h2>
+    <p class="section-sub">Costa looks completely different depending on who you are. Same platform, same data — radically different experience.</p>
+
+    <!-- Tab switcher -->
+    <div class="persona-tabs">
+      <button class="persona-tab active" data-persona="advisor">
+        <span class="ptab-icon">📱</span>
+        <span class="ptab-label">Advisor</span>
+        <span class="ptab-sub">Your second brain on mobile</span>
+      </button>
+      <button class="persona-tab" data-persona="compliance">
+        <span class="ptab-icon">🎛️</span>
+        <span class="ptab-label">Compliance Officer</span>
+        <span class="ptab-sub">The org-wide cockpit</span>
+      </button>
+      <button class="persona-tab" data-persona="admin">
+        <span class="ptab-icon">⚙️</span>
+        <span class="ptab-label">Business Admin</span>
+        <span class="ptab-sub">The Agent IDE</span>
+      </button>
+    </div>
+
+    <!-- ADVISOR: Phone mockup -->
+    <div class="persona-panel active" id="persona-advisor">
+      <div class="persona-layout">
+        <div class="persona-copy">
+          <h3>Costa is your advisor's second brain.</h3>
+          <p>She starts every morning with a brief — who to call, what to prep, what's changed overnight. She answers questions in plain language, drafts follow-ups, flags at-risk clients, and never lets a task fall through the cracks.</p>
+          <ul class="persona-bullets">
+            <li>Morning briefing before you open your inbox</li>
+            <li>Pre-meeting prep packets, auto-generated</li>
+            <li>Instant answers: "What's Jennifer's RMD this year?"</li>
+            <li>Proactive alerts when a client's situation changes</li>
+            <li>Draft emails and follow-up notes in your voice</li>
+          </ul>
+        </div>
+        <div class="persona-device advisor-phone">
+          <!-- Phone frame -->
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <!-- Status bar -->
+              <div class="phone-status-bar">
+                <span>9:41</span>
+                <span>●●● ▲ 🔋</span>
+              </div>
+              <!-- App header -->
+              <div class="phone-app-header">
+                <div class="phone-avatar-mini">
+                  <svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#1d40af"/><ellipse cx="16" cy="13" rx="5" ry="5.5" fill="#c6956a"/><ellipse cx="16" cy="9" rx="6" ry="5" fill="#5a3018"/><rect x="8" y="17" width="16" height="10" rx="3" fill="#1d40af"/></svg>
+                </div>
+                <div>
+                  <div class="phone-header-name">Costa</div>
+                  <div class="phone-header-status"><span class="online-dot"></span> Active now</div>
+                </div>
+                <div class="phone-header-menu">⋯</div>
+              </div>
+              <!-- Chat messages -->
+              <div class="phone-chat">
+                <div class="chat-date-divider">Today · 7:42 AM</div>
+                <div class="chat-bubble costa">
+                  <strong>Good morning, Sarah.</strong> You have 3 client meetings today. Here's what matters:
+                  <div class="chat-brief-cards">
+                    <div class="brief-card priority">
+                      <span class="brief-card-icon">⚠️</span>
+                      <div>
+                        <div class="brief-card-name">Henderson, David</div>
+                        <div class="brief-card-detail">Portfolio down 8.2% YTD — likely to ask. See talking points →</div>
+                      </div>
+                    </div>
+                    <div class="brief-card">
+                      <span class="brief-card-icon">📋</span>
+                      <div>
+                        <div class="brief-card-name">Martinez, Elena · 2:00 PM</div>
+                        <div class="brief-card-detail">Annual review. Beneficiary update pending signature.</div>
+                      </div>
+                    </div>
+                    <div class="brief-card">
+                      <span class="brief-card-icon">🎂</span>
+                      <div>
+                        <div class="brief-card-name">Park, James · 4:30 PM</div>
+                        <div class="brief-card-detail">New prospect. Net worth ~$2.4M. Referred by Chen.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-bubble user">
+                  What's David's current allocation vs his target?
+                </div>
+                <div class="chat-bubble costa">
+                  David's target is <strong>60/40</strong>. He's currently at <strong>52% equity / 48% fixed</strong> after Q3 drawdown. He's also 4% underweight international. I've drafted talking points for rebalancing — want me to send them to you before his 10am?
+                  <div class="chat-actions">
+                    <button class="chat-action-btn">Send talking points</button>
+                    <button class="chat-action-btn secondary">See full portfolio</button>
+                  </div>
+                </div>
+                <div class="chat-bubble user">
+                  Yes, and draft a follow-up email for after the meeting
+                </div>
+                <div class="chat-bubble costa typing">
+                  <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+                </div>
+              </div>
+              <!-- Input bar -->
+              <div class="phone-input-bar">
+                <div class="phone-input-field">Ask Costa anything…</div>
+                <button class="phone-send-btn">↑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPLIANCE: Cockpit dashboard -->
+    <div class="persona-panel" id="persona-compliance">
+      <div class="persona-layout">
+        <div class="persona-copy">
+          <h3>The compliance officer's cockpit.</h3>
+          <p>Real-time visibility across every advisor, every agent, every transaction. No more sampling. No more after-the-fact reviews. Costa monitors the entire organization continuously and flags anything that needs human eyes — before it becomes a problem.</p>
+          <ul class="persona-bullets">
+            <li>Live agent activity feed across all advisors</li>
+            <li>Suitability and disclosure flags in real time</li>
+            <li>KYA health scores for every registered agent</li>
+            <li>Automated audit trail, exportable for regulators</li>
+            <li>One-click escalation and remediation workflows</li>
+          </ul>
+        </div>
+        <div class="persona-device compliance-cockpit">
+          <div class="cockpit-frame">
+            <!-- Top bar -->
+            <div class="cockpit-topbar">
+              <div class="cockpit-logo">costa<span>.ai</span> <span class="cockpit-badge">Compliance Console</span></div>
+              <div class="cockpit-topbar-right">
+                <span class="cockpit-alert-count">3 items need review</span>
+                <div class="cockpit-user">KC</div>
+              </div>
+            </div>
+            <!-- Dashboard grid -->
+            <div class="cockpit-body">
+              <!-- Stat row -->
+              <div class="cockpit-stats">
+                <div class="cstat green">
+                  <div class="cstat-val">847</div>
+                  <div class="cstat-label">Actions today</div>
+                  <div class="cstat-sub">↑ 12% vs yesterday</div>
+                </div>
+                <div class="cstat yellow">
+                  <div class="cstat-val">3</div>
+                  <div class="cstat-label">Pending review</div>
+                  <div class="cstat-sub">2 suitability · 1 disclosure</div>
+                </div>
+                <div class="cstat green">
+                  <div class="cstat-val">100%</div>
+                  <div class="cstat-label">Agent uptime</div>
+                  <div class="cstat-sub">All 5 agents operational</div>
+                </div>
+                <div class="cstat green">
+                  <div class="cstat-val">0</div>
+                  <div class="cstat-label">NIGO filings</div>
+                  <div class="cstat-sub">30-day rolling</div>
+                </div>
+              </div>
+              <!-- Main panels -->
+              <div class="cockpit-panels">
+                <!-- Live feed -->
+                <div class="cockpit-panel wide">
+                  <div class="cockpit-panel-header">
+                    <span>Live Agent Activity</span>
+                    <span class="live-badge">● LIVE</span>
+                  </div>
+                  <div class="activity-feed">
+                    <div class="activity-row">
+                      <div class="activity-agent acquire">ACQ</div>
+                      <div class="activity-detail">
+                        <div class="activity-action">New account opened — Martinez, E.</div>
+                        <div class="activity-meta">Acquire Agent · Sarah Chen · just now</div>
+                      </div>
+                      <div class="activity-status ok">✓ Compliant</div>
+                    </div>
+                    <div class="activity-row flagged">
+                      <div class="activity-agent comply">CPL</div>
+                      <div class="activity-detail">
+                        <div class="activity-action">Suitability flag — Henderson rebalance proposal</div>
+                        <div class="activity-meta">Compliance Agent · Sarah Chen · 4m ago</div>
+                      </div>
+                      <div class="activity-status warn">⚠ Review</div>
+                    </div>
+                    <div class="activity-row">
+                      <div class="activity-agent grow">GRW</div>
+                      <div class="activity-detail">
+                        <div class="activity-action">Prospect brief generated — Park, J.</div>
+                        <div class="activity-meta">Grow Agent · Sarah Chen · 12m ago</div>
+                      </div>
+                      <div class="activity-status ok">✓ Compliant</div>
+                    </div>
+                    <div class="activity-row">
+                      <div class="activity-agent manage">MGT</div>
+                      <div class="activity-detail">
+                        <div class="activity-action">RMD calculation updated — 14 clients</div>
+                        <div class="activity-meta">Manage Agent · Batch run · 28m ago</div>
+                      </div>
+                      <div class="activity-status ok">✓ Compliant</div>
+                    </div>
+                    <div class="activity-row flagged">
+                      <div class="activity-agent acquire">ACQ</div>
+                      <div class="activity-detail">
+                        <div class="activity-action">CIP incomplete — Thompson onboarding paused</div>
+                        <div class="activity-meta">Acquire Agent · Mike Torres · 41m ago</div>
+                      </div>
+                      <div class="activity-status warn">⚠ Review</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- KYA scores -->
+                <div class="cockpit-panel narrow">
+                  <div class="cockpit-panel-header">KYA Agent Health</div>
+                  <div class="kya-scores">
+                    <div class="kya-score-row">
+                      <div class="kya-agent-name">Acquire</div>
+                      <div class="kya-bar-wrap"><div class="kya-bar" style="width:96%"></div></div>
+                      <div class="kya-score-val green">96</div>
+                    </div>
+                    <div class="kya-score-row">
+                      <div class="kya-agent-name">Manage</div>
+                      <div class="kya-bar-wrap"><div class="kya-bar" style="width:99%"></div></div>
+                      <div class="kya-score-val green">99</div>
+                    </div>
+                    <div class="kya-score-row">
+                      <div class="kya-agent-name">Grow</div>
+                      <div class="kya-bar-wrap"><div class="kya-bar" style="width:91%"></div></div>
+                      <div class="kya-score-val green">91</div>
+                    </div>
+                    <div class="kya-score-row">
+                      <div class="kya-agent-name">Compliance</div>
+                      <div class="kya-bar-wrap"><div class="kya-bar" style="width:88%"></div></div>
+                      <div class="kya-score-val yellow">88</div>
+                    </div>
+                    <div class="kya-score-row">
+                      <div class="kya-agent-name">Training</div>
+                      <div class="kya-bar-wrap"><div class="kya-bar" style="width:94%"></div></div>
+                      <div class="kya-score-val green">94</div>
+                    </div>
+                  </div>
+                  <div class="cockpit-panel-header" style="margin-top:1rem">Risk by Advisor</div>
+                  <div class="risk-table">
+                    <div class="risk-row">
+                      <div class="risk-name">Sarah Chen</div>
+                      <div class="risk-bar-wrap"><div class="risk-bar low" style="width:15%"></div></div>
+                      <div class="risk-label low">Low</div>
+                    </div>
+                    <div class="risk-row">
+                      <div class="risk-name">Mike Torres</div>
+                      <div class="risk-bar-wrap"><div class="risk-bar med" style="width:45%"></div></div>
+                      <div class="risk-label med">Medium</div>
+                    </div>
+                    <div class="risk-row">
+                      <div class="risk-name">Priya Nair</div>
+                      <div class="risk-bar-wrap"><div class="risk-bar low" style="width:8%"></div></div>
+                      <div class="risk-label low">Low</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN: Agent IDE -->
+    <div class="persona-panel" id="persona-admin">
+      <div class="persona-layout">
+        <div class="persona-copy">
+          <h3>The Agent IDE for builders.</h3>
+          <p>Connect your entire ecosystem, configure custom models for sensitive tasks, set guardrails, and deploy agents — all without writing a single line of code. Costa's IDE gives admins full control over the intelligence layer of the firm.</p>
+          <ul class="persona-bullets">
+            <li>Visual connector library: Salesforce, Redtail, Orion, Envestnet, +40 more</li>
+            <li>Local model deployment for KYC/AML — data never leaves your network</li>
+            <li>Task-specific model routing: sensitive jobs vs general tasks</li>
+            <li>Set approval thresholds, human-in-the-loop gates, confidence floors</li>
+            <li>One-click agent deployment to all advisors in the firm</li>
+          </ul>
+        </div>
+        <div class="persona-device admin-ide">
+          <div class="ide-frame">
+            <!-- IDE top bar -->
+            <div class="ide-topbar">
+              <div class="ide-tabs">
+                <div class="ide-tab active">Agent Builder</div>
+                <div class="ide-tab">Connectors</div>
+                <div class="ide-tab">Models</div>
+                <div class="ide-tab">Deploy</div>
+              </div>
+              <div class="ide-topbar-right">
+                <button class="ide-deploy-btn">▶ Deploy to Firm</button>
+              </div>
+            </div>
+            <!-- IDE body -->
+            <div class="ide-body">
+              <!-- Left sidebar: agent list -->
+              <div class="ide-sidebar">
+                <div class="ide-sidebar-header">Agents</div>
+                <div class="ide-agent-item active">
+                  <span class="ide-agent-dot green"></span> Acquire
+                </div>
+                <div class="ide-agent-item">
+                  <span class="ide-agent-dot green"></span> Manage
+                </div>
+                <div class="ide-agent-item">
+                  <span class="ide-agent-dot green"></span> Grow
+                </div>
+                <div class="ide-agent-item">
+                  <span class="ide-agent-dot yellow"></span> Compliance
+                </div>
+                <div class="ide-agent-item">
+                  <span class="ide-agent-dot green"></span> Training
+                </div>
+                <div class="ide-sidebar-header" style="margin-top:1rem">Connectors</div>
+                <div class="ide-connector-item">
+                  <span class="ide-conn-dot active"></span>
+                  <span>Salesforce</span>
+                  <span class="ide-conn-status">●</span>
+                </div>
+                <div class="ide-connector-item">
+                  <span class="ide-conn-dot active"></span>
+                  <span>Redtail CRM</span>
+                  <span class="ide-conn-status">●</span>
+                </div>
+                <div class="ide-connector-item">
+                  <span class="ide-conn-dot active"></span>
+                  <span>Orion</span>
+                  <span class="ide-conn-status">●</span>
+                </div>
+                <div class="ide-connector-item">
+                  <span class="ide-conn-dot inactive"></span>
+                  <span>DocuSign</span>
+                  <span class="ide-conn-status inactive">○</span>
+                </div>
+                <div class="ide-connector-item">
+                  <span class="ide-conn-dot inactive"></span>
+                  <span>+ Add connector</span>
+                </div>
+              </div>
+              <!-- Main canvas -->
+              <div class="ide-canvas">
+                <div class="ide-canvas-header">
+                  <span class="ide-breadcrumb">Agents / <strong>Acquire</strong> / Model Configuration</span>
+                  <span class="ide-save-badge">● Unsaved changes</span>
+                </div>
+                <!-- Model routing config -->
+                <div class="ide-section-block">
+                  <div class="ide-block-title">Model Routing</div>
+                  <div class="ide-block-sub">Route tasks to the right model based on sensitivity and context</div>
+                  <div class="model-routing-rows">
+                    <div class="model-route-row sensitive">
+                      <div class="model-route-left">
+                        <div class="model-route-tag local">LOCAL</div>
+                        <div>
+                          <div class="model-route-name">KYC / AML Screening</div>
+                          <div class="model-route-desc">PII never leaves network · costa-kyc-v2 · on-prem</div>
+                        </div>
+                      </div>
+                      <div class="model-route-right">
+                        <span class="model-badge local">costa-kyc-v2</span>
+                        <span class="model-lock">🔒</span>
+                      </div>
+                    </div>
+                    <div class="model-route-row sensitive">
+                      <div class="model-route-left">
+                        <div class="model-route-tag local">LOCAL</div>
+                        <div>
+                          <div class="model-route-name">Document Classification</div>
+                          <div class="model-route-desc">Form recognition · tax docs · statements · on-prem</div>
+                        </div>
+                      </div>
+                      <div class="model-route-right">
+                        <span class="model-badge local">costa-docs-v1</span>
+                        <span class="model-lock">🔒</span>
+                      </div>
+                    </div>
+                    <div class="model-route-row general">
+                      <div class="model-route-left">
+                        <div class="model-route-tag cloud">CLOUD</div>
+                        <div>
+                          <div class="model-route-name">Client Communication Drafts</div>
+                          <div class="model-route-desc">Email drafts, follow-ups, meeting prep · general use</div>
+                        </div>
+                      </div>
+                      <div class="model-route-right">
+                        <span class="model-badge cloud">costa-general</span>
+                      </div>
+                    </div>
+                    <div class="model-route-row general">
+                      <div class="model-route-left">
+                        <div class="model-route-tag cloud">CLOUD</div>
+                        <div>
+                          <div class="model-route-name">Portfolio Commentary</div>
+                          <div class="model-route-desc">Market context, performance summaries, proposals</div>
+                        </div>
+                      </div>
+                      <div class="model-route-right">
+                        <span class="model-badge cloud">costa-general</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Guardrails -->
+                <div class="ide-section-block">
+                  <div class="ide-block-title">Approval Guardrails</div>
+                  <div class="guardrail-rows">
+                    <div class="guardrail-row">
+                      <div class="guardrail-label">Account opening &gt; $500K</div>
+                      <div class="guardrail-control">
+                        <span class="guardrail-tag human">Human approval</span>
+                      </div>
+                    </div>
+                    <div class="guardrail-row">
+                      <div class="guardrail-label">Rebalance trades &gt; 15% drift</div>
+                      <div class="guardrail-control">
+                        <span class="guardrail-tag human">Human approval</span>
+                      </div>
+                    </div>
+                    <div class="guardrail-row">
+                      <div class="guardrail-label">Suitability confidence &lt; 90%</div>
+                      <div class="guardrail-control">
+                        <span class="guardrail-tag review">Compliance review</span>
+                      </div>
+                    </div>
+                    <div class="guardrail-row">
+                      <div class="guardrail-label">Standard communications</div>
+                      <div class="guardrail-control">
+                        <span class="guardrail-tag auto">Auto-execute</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- KYA -->
+<section class="kya-section">
+  <div class="section-inner">
+    <div class="section-tag">Know Your Agent</div>
+    <h2 class="section-title">The KYC of the agentic firm.</h2>
+    <p class="section-sub">Every agent that touches your clients has a registered identity, a human owner, tested accuracy, and continuous monitoring. Autonomy is earned — not assumed.</p>
+    <div class="kya-grid">
+      <div class="kya-card">
+        <div class="icon">🪪</div>
+        <h4>Registered Identity</h4>
+        <p>Every agent has a unique ID, a defined scope, and a named human owner.</p>
+      </div>
+      <div class="kya-card">
+        <div class="icon">🧪</div>
+        <h4>Tested Before Launch</h4>
+        <p>Accuracy, bias, and suitability are validated before any agent goes live.</p>
+      </div>
+      <div class="kya-card">
+        <div class="icon">📡</div>
+        <h4>Monitored for Drift</h4>
+        <p>Continuous monitoring catches behavior changes before they become compliance events.</p>
+      </div>
+      <div class="kya-card">
+        <div class="icon">⏸️</div>
+        <h4>Pausable Anytime</h4>
+        <p>Any agent can be paused instantly. Recertification is required to restore full autonomy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section id="outcomes">
+  <div class="section-inner">
+    <div class="section-tag">Measurable Outcomes</div>
+    <h2 class="section-title">Real numbers.<br />Not promises.</h2>
+    <p class="section-sub">Costa doesn't optimize a metric in isolation. She transforms the entire practice.</p>
+    <div class="outcomes-grid">
+      <div class="outcome-card blue">
+        <div class="outcome-before-after">
+          <div class="oba">
+            <div class="oba-label">Before</div>
+            <div class="oba-value before">~30%</div>
+          </div>
+          <div class="oba-arrow">→</div>
+          <div class="oba">
+            <div class="oba-label">With Costa</div>
+            <div class="oba-value">70%<span style="font-size:1rem;color:var(--gold-light)">+</span></div>
+          </div>
+        </div>
+        <div class="outcome-label">Advisor time spent with clients</div>
+      </div>
+      <div class="outcome-card gold">
+        <div class="outcome-before-after">
+          <div class="oba">
+            <div class="oba-label">Before</div>
+            <div class="oba-value before">2–4 wks</div>
+          </div>
+          <div class="oba-arrow">→</div>
+          <div class="oba">
+            <div class="oba-label">With Costa</div>
+            <div class="oba-value">1<span style="font-size:1rem;color:var(--gold-light)"> day</span></div>
+          </div>
+        </div>
+        <div class="outcome-label">Account opening time</div>
+      </div>
+      <div class="outcome-card green">
+        <div class="outcome-before-after">
+          <div class="oba">
+            <div class="oba-label">Before</div>
+            <div class="oba-value before">25%+</div>
+          </div>
+          <div class="oba-arrow">→</div>
+          <div class="oba">
+            <div class="oba-label">With Costa</div>
+            <div class="oba-value">&lt;2<span style="font-size:1rem;color:#22c55e">%</span></div>
+          </div>
+        </div>
+        <div class="outcome-label">NIGO (Not in Good Order) rate</div>
+      </div>
+      <div class="outcome-card purple">
+        <div class="outcome-before-after">
+          <div class="oba">
+            <div class="oba-label">Before</div>
+            <div class="oba-value before">70%+</div>
+          </div>
+          <div class="oba-arrow">→</div>
+          <div class="oba">
+            <div class="oba-label">With Costa</div>
+            <div class="oba-value">&lt;30<span style="font-size:1rem;color:#a78bfa">%</span></div>
+          </div>
+        </div>
+        <div class="outcome-label">Time on admin and compliance prep</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries" style="background:rgba(255,255,255,0.02)">
+  <div class="section-inner">
+    <div class="section-tag">Built for Regulated Industries</div>
+    <h2 class="section-title">Starting in wealth.<br />Built for every regulated profession.</h2>
+    <p class="section-sub">The architecture is the same everywhere. The systems, rules, products, and documents change — and we adapt through our IDE and custom models.</p>
+    <div class="industries-grid">
+      <div class="industry-card">
+        <div class="icon">💼</div>
+        <h4>Wealth Management</h4>
+        <p>Advisor productivity, seamless account opening, suitability, Reg BI compliance, and AUM growth.</p>
+        <span class="badge badge-now">Available Now</span>
+      </div>
+      <div class="industry-card">
+        <div class="icon">🏦</div>
+        <h4>Banking</h4>
+        <p>Commercial and retail onboarding, lending workflows, and relationship management across branches.</p>
+        <span class="badge badge-soon">Coming Soon</span>
+      </div>
+      <div class="industry-card">
+        <div class="icon">🏥</div>
+        <h4>Healthcare</h4>
+        <p>Clinical documentation, prior auth, compliance, and administrative burden reduction for providers.</p>
+        <span class="badge badge-soon">Coming Soon</span>
+      </div>
+      <div class="industry-card">
+        <div class="icon">🔬</div>
+        <h4>Life Sciences</h4>
+        <p>Regulatory submissions, trial documentation, pharmacovigilance, and audit trail management.</p>
+        <span class="badge badge-soon">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="waitlist" class="cta-section">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag" style="text-align:center;display:block">Early Access</div>
+    <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-0.02em;margin-bottom:1rem">
+      Be first to meet Costa.
+    </h2>
+    <p style="font-size:1.1rem;color:var(--muted);margin-bottom:2.5rem;max-width:500px;margin-left:auto;margin-right:auto">
+      We're onboarding a small cohort of wealth advisors to prove the model. Join the list and we'll be in touch.
+    </p>
+
+    <!-- Mini avatar in CTA -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:2rem">
+      <svg viewBox="0 0 60 60" width="60" height="60" style="border-radius:50%;border:2px solid var(--gold)">
+        <defs>
+          <clipPath id="c2"><circle cx="30" cy="30" r="30"/></clipPath>
+        </defs>
+        <g clip-path="url(#c2)">
+          <rect width="60" height="60" fill="#0d1f3c"/>
+          <ellipse cx="30" cy="56" rx="26" ry="22" fill="#1d40af"/>
+          <rect x="25" y="38" width="10" height="14" rx="5" fill="#c6956a"/>
+          <ellipse cx="30" cy="32" rx="14" ry="15" fill="#c6956a"/>
+          <path d="M16 32 Q14 26 16 21 Q19 14 25 12 Q30 10 35 12 Q41 14 43 21 Q45 27 43 32" fill="#5a3018"/>
+          <ellipse cx="17" cy="34" rx="3" ry="4" fill="#c09060"/>
+          <ellipse cx="43" cy="34" rx="3" ry="4" fill="#c09060"/>
+          <ellipse cx="24" cy="33" rx="3.5" ry="3.5" fill="#fff"/>
+          <ellipse cx="36" cy="33" rx="3.5" ry="3.5" fill="#fff"/>
+          <ellipse cx="25" cy="33" rx="2.5" ry="2.5" fill="#5a3018"/>
+          <ellipse cx="37" cy="33" rx="2.5" ry="2.5" fill="#5a3018"/>
+          <path d="M25 41 Q30 45 35 41" stroke="#b07040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div style="text-align:left">
+        <div style="font-weight:700;color:var(--white)">Costa is ready when you are.</div>
+        <div style="font-size:0.85rem;color:var(--muted)">She's already working for 3 pilot firms.</div>
+      </div>
+    </div>
+
+    <form class="cta-form" onsubmit="handleSubmit(event)">
+      <input type="email" id="email-input" placeholder="your@firm.com" required />
+      <button type="submit">Join the List</button>
+    </form>
+    <div class="cta-note" id="cta-feedback">No spam. Just a conversation when we're ready for you.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">costa<span>.</span>ai</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Costa.ai. All rights reserved.</div>
+</footer>
+
+<script>
+  // Agent item interaction
+  document.querySelectorAll('.agent-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.agent-item').forEach(i => i.classList.remove('selected'));
+      item.classList.add('selected');
+    });
+  });
+
+  // Waitlist form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const feedback = document.getElementById('cta-feedback');
+    btn.textContent = 'Done!';
+    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+    feedback.textContent = "You're on the list. Costa will be in touch.";
+    feedback.style.color = '#22c55e';
+    setTimeout(() => {
+      btn.textContent = 'Join the List';
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  // Persona tab switcher
+  document.querySelectorAll('.persona-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.persona-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.persona-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('persona-' + tab.dataset.persona).classList.add('active');
+    });
+  });
+
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.how-card, .agent-item, .kya-card, .outcome-card, .industry-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
