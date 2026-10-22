@@ -1432,16 +1432,17 @@
               <!-- Neck shadow -->
               <rect x="72" y="112" width="16" height="8" rx="4" fill="#c4a898" opacity="0.25"/>
 
+              <!-- Bob hair — drawn before head so crown sits on top of head naturally -->
+              <!-- Outer bob shape: wide U covering crown + sides + ending at jaw -->
+              <path d="M42 108 Q42 85 46 72 Q51 58 57 55 Q63 52 80 52 Q97 52 103 55 Q109 58 114 72 Q118 85 118 108 Q110 112 80 112 Q50 112 42 108 Z" fill="#b8831a"/>
+              <!-- Crown highlight layer -->
+              <path d="M57 55 Q63 51 80 51 Q97 51 103 55 Q96 59 88 61 Q84 62 80 62 Q76 62 72 61 Q64 59 57 55 Z" fill="#c9952a"/>
+              <!-- Bob sheen -->
+              <path d="M63 55 Q72 52 80 52" fill="none" stroke="#e8b84b" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+              <path d="M97 55 Q88 52 80 52" fill="none" stroke="#e8b84b" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+
               <!-- Head -->
               <ellipse cx="80" cy="88" rx="29" ry="31" fill="url(#skin-grad)"/>
-
-              <!-- Bob hair — outer shape, flows behind head on sides down to jaw -->
-              <path d="M42 108 Q42 85 46 72 Q51 58 57 56 Q63 54 80 54 Q97 54 103 56 Q109 58 114 72 Q118 85 118 108 Q110 112 80 112 Q50 112 42 108 Z" fill="#b8831a"/>
-              <!-- Bob hair — top crown highlight -->
-              <path d="M57 56 Q63 53 80 53 Q97 53 103 56 Q96 60 88 62 Q84 63 80 63 Q76 63 72 62 Q64 60 57 56 Z" fill="#c9952a"/>
-              <!-- Bob sheen -->
-              <path d="M63 57 Q72 54 80 54" fill="none" stroke="#e8b84b" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-              <path d="M97 57 Q88 54 80 54" fill="none" stroke="#e8b84b" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
 
               <!-- Ears — partially hidden by bob -->
               <ellipse cx="51" cy="90" rx="4" ry="5.5" fill="#ddc8bb"/>
