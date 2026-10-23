@@ -849,6 +849,62 @@
     .persona-panel { display: none; }
     .persona-panel.active { display: block; }
 
+    /* Phase 2 callout */
+    .phase2-callout {
+      margin-top: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+    }
+    .phase2-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      opacity: 0.85;
+    }
+    .phase2-personas {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .phase2-persona {
+      flex: 1;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .phase2-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .phase2-text strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .phase2-text span {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .phase2-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.1);
+      align-self: stretch;
+      flex-shrink: 0;
+    }
+    @media (max-width: 640px) {
+      .phase2-personas { flex-direction: column; }
+      .phase2-divider { width: auto; height: 1px; }
+    }
+
     /* Shared layout: copy left, device right */
     .persona-layout {
       display: grid;
@@ -1424,7 +1480,7 @@
   <div class="section-inner">
     <div class="section-tag">See It In Action</div>
     <h2 class="section-title">Costa at work.</h2>
-    <p class="section-sub" style="margin-bottom:3rem;">Two parts. The full picture of what a chief of staff looks like in a regulated firm.</p>
+    <p class="section-sub" style="margin-bottom:3rem;white-space:nowrap;">Two parts. The full picture of what a chief of staff looks like in a regulated firm.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
       <div>
         <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;">Part 1</div>
@@ -1559,6 +1615,28 @@
         <span class="ptab-label">Business Admin</span>
         <span class="ptab-sub">The Agent IDE</span>
       </button>
+    </div>
+
+    <!-- Phase 2 callout -->
+    <div class="phase2-callout">
+      <div class="phase2-label">Phase 2</div>
+      <div class="phase2-personas">
+        <div class="phase2-persona">
+          <div class="phase2-icon">🤖</div>
+          <div class="phase2-text">
+            <strong>The Client</strong>
+            <span>Your client's AI agent interacts directly with Costa through a credentialed machine-to-machine protocol — no portal, no manual handoff, just verified inter-agent trust.</span>
+          </div>
+        </div>
+        <div class="phase2-divider"></div>
+        <div class="phase2-persona">
+          <div class="phase2-icon">🏛️</div>
+          <div class="phase2-text">
+            <strong>The Regulator</strong>
+            <span>A read-only portal into the full compliance workbench — every agent action, approval, and audit trail, structured and searchable.</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ADVISOR: Phone mockup -->
