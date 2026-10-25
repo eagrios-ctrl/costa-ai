@@ -1,0 +1,9 @@
+# Internal planning / strategy docs — must NOT be published to this public repo
+EXECUTION_PLAN.md
+HANDOFF.md
+
+# Local Claude Code config
+.claude/
+
+# macOS cruft
+.DS_Store
