@@ -4,20 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Costa.ai — Your Chief of Staff</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy: #0a1628;
-      --deep: #0d1f3c;
-      --accent: #2563eb;
-      --accent-light: #3b82f6;
-      --gold: #f59e0b;
-      --gold-light: #fbbf24;
+      --navy: #0a1f3c;
+      --navy-deep: #071730;
+      --deep: #0e2748;
+      --accent: #2a7de1;
+      --accent-light: #38bdf8;
+      --cyan: #7dd3fc;
+      --cyan-bright: #a5e8ff;
+      --gold: #38bdf8;
+      --gold-light: #7dd3fc;
       --white: #ffffff;
-      --off-white: #f8fafc;
-      --muted: #94a3b8;
-      --text: #e2e8f0;
-      --card-bg: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.08);
+      --off-white: #f6f9fc;
+      --muted: #9fb3c8;
+      --text: #dce6f2;
+      --ink: #0d2748;
+      --ink-soft: #46618a;
+      --card-bg: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.1);
+      --serif: 'Fraunces', 'Georgia', serif;
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --paper: #ffffff;
+      --paper-tint: #eef4fb;
+      --paper-blue: #dbeafe;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -104,7 +117,7 @@
     }
     .orb-3 {
       width: 400px; height: 400px;
-      background: #7c3aed;
+      background: var(--gold);
       top: 30%; left: 40%;
       animation-delay: 8s;
       opacity: 0.1;
@@ -583,8 +596,8 @@
     }
     .outcome-card.blue::after { background: linear-gradient(90deg, var(--accent), transparent); }
     .outcome-card.gold::after { background: linear-gradient(90deg, var(--gold), transparent); }
-    .outcome-card.green::after { background: linear-gradient(90deg, #22c55e, transparent); }
-    .outcome-card.purple::after { background: linear-gradient(90deg, #7c3aed, transparent); }
+    .outcome-card.green::after { background: linear-gradient(90deg, var(--accent-light), transparent); }
+    .outcome-card.purple::after { background: linear-gradient(90deg, var(--gold), transparent); }
 
     .outcome-before-after {
       display: flex;
@@ -1518,12 +1531,12 @@
         <p>Every agent has a registered identity, scoped permissions, and a human owner. Compliance is built in — not bolted on.</p>
       </div>
       <div class="how-card">
-        <div class="how-icon" style="background:rgba(124,58,237,0.15)">⚡</div>
+        <div class="how-icon" style="background:rgba(212,175,55,0.15)">⚡</div>
         <h3>Proactive, not reactive</h3>
         <p>Costa doesn't wait for questions. She monitors, alerts, prepares, and executes — surfacing decisions before they become problems.</p>
       </div>
       <div class="how-card">
-        <div class="how-icon" style="background:rgba(34,197,94,0.15)">🛠️</div>
+        <div class="how-icon" style="background:rgba(56,189,248,0.15)">🛠️</div>
         <h3>No-code admin IDE</h3>
         <p>Admins wire integrations and configure agents visually. No engineers required to connect your existing systems.</p>
       </div>
